@@ -1,0 +1,103 @@
+{
+	"contact": [{
+		"type": "email",
+		"faclass": "fa-envelope",
+		"href": "#",
+		"title": "mail"
+	}, {
+		"type": "phone",
+		"faclass": "fa-phone",
+		"href": "tel:+0000000000",
+		"title": "+91 0000000000"
+	}, {
+		"type": "website",
+		"faclass": "fa-globe",
+		"href": "#",
+		"title": "/resume",
+		"target": "_blank"
+	}, {
+		"type": "stackoverflow",
+		"faclass": "fa-stack-overflow",
+		"href": "#",
+		"title": "/stackoverflow",
+		"target": "_blank"
+	}, {
+		"type": "linkedin",
+		"faclass": "fa-linkedin",
+		"href": "https://in.linkedin.com/in",
+		"title": "/name"
+	}, {
+		"type": "github",
+		"faclass": "fa-github",
+		"href": "https://github.com/",
+		"title": "/name",
+		"target": "_blank"
+	}, {
+		"type": "twitter",
+		"faclass": "fa-twitter",
+		"href": "https://twitter.com/",
+		"title": "@name",
+		"target": "_blank"
+	}],
+	"education": [{
+		"degree": "B.E in Computer Science",
+		"meta": [
+			"College,",
+			"University,",
+			"City"
+		],
+		"time": "1999 - 2003"
+	}],
+	"languages": [{
+		"title": "Spanish",
+		"type": "Native"
+	}, {
+		"title": "English",
+		"type": "Professional"
+	}],
+	"interests": [
+		"Cricket",
+		"Trekking",
+		"Cooking"
+	],
+	"skills": [{
+		"title": "Javascript",
+		"proficiency": 97
+	}, {
+		"title": "AngularJS",
+		"proficiency": 85
+	}, {
+		"title": "jQuery",
+		"proficiency": 95
+	}, {
+		"title": "HTML & CSS",
+		"proficiency": 90
+	}, {
+		"title": "ASP.NET MVC / API",
+		"proficiency": 95
+	}, {
+		"title": "MSSQL",
+		"proficiency": 90
+	}, {
+		"title": "C# & Unity",
+		"proficiency": 93
+	}, {
+		"title": "NodeJS",
+		"proficiency": 70
+	}, {
+		"title": "Python (Bottle & Nginx)",
+		"proficiency": 60
+	}, {
+		"title": "PHP & MySql",
+		"proficiency": 70,
+		"reason": "I haven't used this technology for a while now."
+	}, {
+		"title": "Laravel PHP",
+		"proficiency": 70,
+		"reason": "I haven't used this technology for a while now."
+	}, {
+		"title": "Windows Application",
+		"proficiency": 45,
+		"reason": "I haven't used this technology for a while now."
+	}]
+}
