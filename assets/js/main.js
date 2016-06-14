@@ -22,7 +22,7 @@ jQuery(document).ready(function ($) {
                 skill_item += '<div class="item"><h3 class="level-title">' + val.title + '&nbsp<i class="fa fa-info-circle" title="' + val.reason + '""></i></h3>';
             else
                 skill_item += '<div class="item"><h3 class="level-title">' + val.title + '</h3>';
-            skill_item += '<div class="level-bar"><div class="level-bar-inner" data-level="' + val.proficiency + '%"></div></div></div>';
+            skill_item += '<div class="level-bar" title="' + val.proficiency + '"><div class="level-bar-inner" data-level="' + val.proficiency + '%"></div></div></div>';
             items.push(skill_item);
         });
         $(".skillset").empty().append(items)
@@ -59,9 +59,9 @@ jQuery(document).ready(function ($) {
         $(".contact-container ul.contact-list").empty();
         $.each(metajson.contact, function (key, val) {
             if (val.target)
-                $(".contact-container ul.contact-list").append("<li class='" + val.type + "'><i class='fa " + val.faclass + "'></i><a href='" + val.href + "' target='" + val.target + "'>" + val.title + "</a></li>");
+                $(".contact-container ul.contact-list").append("<li class='" + val.type + "'><i class='fa " + val.faclass + "'></i><a href='" + val.href + "' title='" + val.type + "' target='" + val.target + "'>" + val.title + "</a></li>");
             else
-                $(".contact-container ul.contact-list").append("<li class='" + val.type + "'><i class='fa " + val.faclass + "'></i><a href='" + val.href + "'>"+ val.title +"</a></li>");
+                $(".contact-container ul.contact-list").append("<li class='" + val.type + "'><i class='fa " + val.faclass + "'></i><a href='" + val.href + "' title='" + val.type + "'>" + val.title + "</a></li>");
         });
     }
 });
