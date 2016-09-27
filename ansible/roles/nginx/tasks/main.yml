@@ -1,0 +1,73 @@
+---
+- name: Create a group for this application
+  group: name={{ site_group }} state=present
+
+- name: Create a user for this application
+  user: name={{ site_user }} comment="Application account for cloud selector" group={{ site_group }}
+
+- name: Add the nginx user to the site group for access to static files
+  user: name={{ nginx_user }} groups={{ site_group }} append=yes
+
+- name: Add the nginx user to the vagrant group for local development
+  user: name={{ nginx_user }} groups=vagrant append=yes
+  when: "{{ local_dev }}"
+
+- name: Install nginx
+  yum: pkg={{ item }} state=present
+  with_items:
+    - nginx
+
+- name: start and enable nginx
+  service: name=nginx enabled=yes
+  notify: restart nginx
+
+- name: determine whether firewall modifications are necessary
+  shell: systemctl status firewalld
+  register: firewall_state
+  ignore_errors: True
+
+- name: setup firewall to allow http/https access
+  shell: firewall-cmd --zone=public --add-port={{ item }}
+  with_items:
+    - http/tcp
+    - http/tcp --permanent
+    - https/tcp
+    - https/tcp --permanent
+  when: firewall_state.stdout.find('running') != -1
+
+- name: Copy nginx configuration
+  template: src=default dest=/etc/nginx/conf.d/{{ site_user }}.conf owner={{ nginx_user }} group={{ nginx_group }}
+  notify: restart nginx
+
+- name: Copy nginx configuration for development
+  template: src=development dest=/etc/nginx/conf.d/{{ site_user }}.local.conf owner={{ nginx_user }} group={{ nginx_group }}
+  notify: restart nginx
+  when: "{{ local_dev }}"
+
+- name: Ensure directories exist
+  file: path={{ item }} state=directory mode=0750 owner={{ site_user }} group={{ site_group }}
+  with_items:
+    - "{{ document_root }}"
+    - "{{ document_root }}/config"  # for the config.js template below
+
+- name: Update ownership/permissions for home directory
+  file: path={{ user_home }} mode=750
+  notify: restart nginx
+
+
+- name: Copy all files
+  synchronize: src={{ item.src }} dest={{ item.dest }}
+  with_items:
+    - {src: "../index.html", dest: "{{ document_root }}"}
+    - {src: "../favicon-muff.ico", dest: "{{ document_root }}"}
+    - {src: "../assets", dest: "{{ document_root }}"}
+    - {src: "../data", dest: "{{ document_root }}"}
+
+- name: Update ownership/permissions for files
+  file: path={{ document_root }} owner={{ site_user }} group={{ site_group }} recurse=yes
+
+- name: Copy config sensitive files into place
+  template: src={{ item.src }} dest={{ item.dest }} owner={{ site_user }} group={{ site_group }} mode=0640
+  with_items:
+     - src: "../index.html"
+       dest: "{{ document_root}}/index.html"

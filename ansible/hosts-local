@@ -1,0 +1,7 @@
+[trymuffinresume]
+localhost              ansible_connection=local
+
+[trymuffinresume:vars]
+common_name=resume.192.168.50.10.nip.io
+local_dev=true
+env=Dev

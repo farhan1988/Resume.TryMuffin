@@ -3,6 +3,7 @@ jQuery(document).ready(function ($) {
     $(window).on('load', function () {
         $.getJSON("data/meta.json", function (data) {
             metajson = data;
+            getCoverInfo();
             // Loads skills
             getSkills();
             getInterests();
@@ -11,9 +12,9 @@ jQuery(document).ready(function ($) {
             getContact();
         })
     });
-
-
-
+    function getCoverInfo() {
+        $("#cover_info").empty().append(metajson.cover_info);
+    }
     function getSkills() {
         var items = [];
         $.each(metajson.skills, function (key, val) {
@@ -56,12 +57,25 @@ jQuery(document).ready(function ($) {
         });
     }
     function getContact() {
-        $(".contact-container ul.contact-list").empty();
+        var cList = $(".contact-container ul.contact-list");
+        cList.empty(); // Clear Items
         $.each(metajson.contact, function (key, val) {
+            var li = $("<li/>")
+                     .addClass(val.type)
+                     .appendTo(cList)
+            var faico = $("<i/>")
+                        .addClass('fa ' + val.faclass)
+                        .appendTo(li)
+            var anchor = $("<a/>")
+                         .attr("href", val.href)
+                         .attr("data-category", "contacts")
+                         .attr("title", val.type)
+                         .text(val.title)
             if (val.target)
-                $(".contact-container ul.contact-list").append("<li class='" + val.type + "'><i class='fa " + val.faclass + "'></i><a href='" + val.href + "' title='" + val.type + "' target='" + val.target + "'>" + val.title + "</a></li>");
-            else
-                $(".contact-container ul.contact-list").append("<li class='" + val.type + "'><i class='fa " + val.faclass + "'></i><a href='" + val.href + "' title='" + val.type + "'>" + val.title + "</a></li>");
+                anchor.attr("target", val.target);
+            anchor.appendTo(li)
         });
+
+        $(".contact-container ul.contact-list li").on("click", function () { TrackEvent(this) })
     }
 });

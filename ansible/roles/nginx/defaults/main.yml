@@ -1,0 +1,10 @@
+---
+site_user: automation
+site_group: automation
+nginx_user: nginx
+nginx_group: nginx
+user_home: "/home/{{ site_user }}"
+document_root: "{{ user_home }}/public_html"
+http_logs: "/var/log/nginx"
+https_access_log: "{{ http_logs }}/{{ site_user }}.access.log"
+https_error_log: "{{ http_logs }}/{{ site_user }}.error.log"

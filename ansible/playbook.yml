@@ -1,0 +1,9 @@
+---
+- name: Install Nginx and Try Muffin Resume
+  hosts: trymuffinresume
+  remote_user: automation
+  sudo: yes
+  gather_facts: false
+
+  roles:
+    - nginx
